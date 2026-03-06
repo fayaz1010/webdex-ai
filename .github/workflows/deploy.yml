@@ -40,8 +40,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '20', cache: 'pnpm' }
       - run: pnpm install --frozen-lockfile
-      - name: Build database package
-        run: cd packages/database && pnpm build
+      - name: Build shared + database packages
+        run: pnpm turbo build --filter=@webdex/shared --filter=@webdex/database
       - name: Run migrations
         run: node packages/database/dist/migrate.js
         working-directory: .
