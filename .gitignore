@@ -14,6 +14,7 @@ dist/
 .next/
 out/
 build/
+*.tsbuildinfo
 
 # Models (large binary files — download via scripts/download-models.sh)
 packages/interpreter/models/
