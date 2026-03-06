@@ -25,6 +25,6 @@ app.route('/v1', assembleRoutes);
 app.route('/v1', crawlRoutes);
 app.route('/', healthRoutes);
 
-const port = parseInt(process.env.API_PORT || '3000');
-console.log(`🚀 WebDex API starting on port ${port}`);
+const port = parseInt(process.env.PORT || process.env.API_PORT || '3000');
+console.log(`WebDex API starting on port ${port}`);
 serve({ fetch: app.fetch, port });
