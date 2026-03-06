@@ -16,7 +16,9 @@
     "@webdex/crawler": "workspace:*",
     "node-llama-cpp": "^3.0.0",
     "@xenova/transformers": "^2.17.0",
-    "@anthropic-ai/sdk": "^0.24.0"
+    "@anthropic-ai/sdk": "^0.24.0",
+    "bullmq": "^5.0.0",
+    "ioredis": "^5.3.0"
   },
   "devDependencies": {
     "tsx": "^4.7.0",

@@ -48,13 +48,15 @@ export async function initLocalModel(): Promise<void> {
 export async function localInfer(systemPrompt: string, userMessage: string): Promise<string> {
   if (!model || !context) throw new Error('Model not initialized. Call initLocalModel() first.');
 
-  const session = new LlamaChatSession({ contextSequence: context.getSequence() });
+  const session = new LlamaChatSession({
+    contextSequence: context.getSequence(),
+    systemPrompt,
+  });
 
   const response = await session.prompt(userMessage, {
     maxTokens: 4096,
-    temperature: 0.05,          // Near-zero for deterministic structured outputs
-    systemPrompt,
-  });
+    temperature: 0.05,
+  } as any);
 
   session.dispose();
   return response;
