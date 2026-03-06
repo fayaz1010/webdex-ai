@@ -4,7 +4,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && node scripts/copy-migrations.js",
+    "build": "tsc && node scripts/copy-migrations.cjs",
     "migrate": "tsx src/migrate.ts"
   },
   "dependencies": {
