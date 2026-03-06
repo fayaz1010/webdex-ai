@@ -98,7 +98,7 @@ actionRoutes.post('/actions/execute', async (c) => {
 
   const entity = result.rows[0];
   const actionData = entity.data;
-  const apiKeyId = (c.get('apiKey') as any)?.id || null;
+  const apiKeyId = ((c as any).get('apiKey'))?.id || null;
   const trust = await getActionTrustLevel(action_id);
 
   // ── TRUSTED: execute hands-free ──────────────────────────────────────────

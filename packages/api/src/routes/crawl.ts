@@ -16,7 +16,6 @@ crawlRoutes.post('/crawl', async (c) => {
     domain: extractDomain(url),
     priority: priority || 2,
     source: 'on-demand',
-    maxDepth: deep ? 3 : 1,
   });
 
   return c.json({ queued: true, job_id: jobId, url, message: 'Crawl job queued.' });
@@ -32,7 +31,7 @@ crawlRoutes.post('/crawl/bulk', async (c) => {
     url,
     domain: extractDomain(url),
     priority: priority || 2,
-    source: 'bulk' as const,
+    source: 'on-demand' as const,
   }));
 
   await addBulkCrawlJobs(jobs);

@@ -1,10 +1,12 @@
 import { type Context, type Next } from 'hono';
-import IORedis from 'ioredis';
+import IORedisModule from 'ioredis';
 
-let redis: IORedis | null = null;
+const IORedis = (IORedisModule as any).default || IORedisModule;
+
+let redis: InstanceType<typeof IORedis> | null = null;
 let redisAvailable = true;
 
-function getRedis(): IORedis | null {
+function getRedis(): InstanceType<typeof IORedis> | null {
   if (!redisAvailable) return null;
   if (!redis) {
     redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379', {
