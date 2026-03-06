@@ -1,0 +1,15 @@
+# Railway monorepo build for @webdex/mcp-server
+# MCP server communicates over stdio — no HTTP healthcheck needed
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+cmds = ["npm install -g pnpm@9 turbo"]
+
+[phases.install]
+cmds = ["cd ../../ && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../../ && pnpm turbo build --filter=@webdex/mcp-server..."]
+
+[start]
+cmd = "node ../../packages/mcp-server/dist/index.js"

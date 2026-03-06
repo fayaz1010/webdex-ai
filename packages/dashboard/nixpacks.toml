@@ -1,0 +1,16 @@
+# @webdex/dashboard is deployed to VERCEL, NOT Railway.
+# Remove this service from the Railway dashboard.
+# Vercel project: https://vercel.com/fayaz-9125/webdex-ai-dashboard
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+cmds = ["npm install -g pnpm@9 turbo"]
+
+[phases.install]
+cmds = ["cd ../../ && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../../ && pnpm turbo build --filter=@webdex/dashboard"]
+
+[start]
+cmd = "node -e \"console.log('@webdex/dashboard belongs on Vercel, not Railway — remove this service'); process.exit(0);\""

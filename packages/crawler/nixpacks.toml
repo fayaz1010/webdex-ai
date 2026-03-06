@@ -1,0 +1,16 @@
+# @webdex/crawler is a shared library, NOT a standalone service.
+# Delete this service from the Railway dashboard — crawling is triggered
+# via the webdex-api (/v1/crawl) and processed by webdex-worker.
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+cmds = ["npm install -g pnpm@9 turbo"]
+
+[phases.install]
+cmds = ["cd ../../ && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../../ && pnpm turbo build --filter=@webdex/crawler"]
+
+[start]
+cmd = "node -e \"console.log('@webdex/crawler is a library — remove this Railway service and use webdex-worker instead'); process.exit(0);\""

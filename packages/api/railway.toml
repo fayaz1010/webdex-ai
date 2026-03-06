@@ -1,9 +1,5 @@
-[build]
-builder = "NIXPACKS"
-buildCommand = "cd ../.. && pnpm install --frozen-lockfile && pnpm turbo build --filter=@webdex/api..."
-
 [deploy]
-startCommand = "node packages/api/dist/index.js"
 healthcheckPath = "/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

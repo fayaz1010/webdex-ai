@@ -1,9 +1,4 @@
-[build]
-builder = "NIXPACKS"
-buildCommand = "cd ../.. && pnpm install --frozen-lockfile && pnpm turbo build --filter=@webdex/interpreter..."
-
 [deploy]
-# Worker process — no HTTP, no healthcheck
-startCommand = "node packages/interpreter/dist/worker.js"
+# Worker process — long-running, no HTTP healthcheck
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 5

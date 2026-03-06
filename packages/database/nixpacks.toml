@@ -1,0 +1,17 @@
+# @webdex/database is a shared library, NOT a standalone service.
+# Delete this service from the Railway dashboard — it runs as a dependency
+# of webdex-api and webdex-worker, not on its own.
+# This minimal config prevents Railway from crash-looping it.
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+cmds = ["npm install -g pnpm@9 turbo"]
+
+[phases.install]
+cmds = ["cd ../../ && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../../ && pnpm turbo build --filter=@webdex/database"]
+
+[start]
+cmd = "node -e \"console.log('@webdex/database is a library — remove this Railway service and use webdex-api instead'); process.exit(0);\""

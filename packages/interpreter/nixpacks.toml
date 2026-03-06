@@ -1,0 +1,20 @@
+# Railway monorepo build for @webdex/interpreter (worker process)
+# Note: local LLM model is NOT downloaded here — the Oracle server handles that.
+# On Railway, inference falls back to free API cascade (Groq → Gemini → OpenRouter → Claude)
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+cmds = [
+  "npm install -g pnpm@9 turbo",
+  # Install Playwright dependencies for browser-based crawling
+  "apt-get update && apt-get install -y libnss3 libnspr4 libdbus-1-3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2 libpango-1.0-0 libpangocairo-1.0-0 libcairo2 libatspi2.0-0 || true",
+]
+
+[phases.install]
+cmds = ["cd ../../ && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../../ && pnpm turbo build --filter=@webdex/interpreter..."]
+
+[start]
+cmd = "node ../../packages/interpreter/dist/worker.js"

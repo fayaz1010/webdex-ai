@@ -1,0 +1,16 @@
+# Railway monorepo build for @webdex/api
+# Railway clones the full repo; CWD starts at packages/api
+# We navigate to monorepo root for install + build
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+cmds = ["npm install -g pnpm@9 turbo"]
+
+[phases.install]
+cmds = ["cd ../../ && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../../ && pnpm turbo build --filter=@webdex/api..."]
+
+[start]
+cmd = "node ../../packages/api/dist/index.js"

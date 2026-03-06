@@ -1,0 +1,15 @@
+# @webdex/personal-index is a library used by webdex-api.
+# It does not run as its own service.
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+cmds = ["npm install -g pnpm@9 turbo"]
+
+[phases.install]
+cmds = ["cd ../../ && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../../ && pnpm turbo build --filter=@webdex/personal-index"]
+
+[start]
+cmd = "node -e \"console.log('@webdex/personal-index is a library — remove this Railway service'); process.exit(0);\""
