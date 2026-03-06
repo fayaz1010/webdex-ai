@@ -5,7 +5,7 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["npm install -g pnpm@9 turbo", "pnpm install"]
+cmds = ["corepack enable && corepack prepare pnpm@9.15.0 --activate && pnpm install"]
 
 [start]
-cmd = "echo 'No default start command — each service overrides this'"
+cmd = "echo 'No default start command - each service overrides this'"
