@@ -1,0 +1,11 @@
+# Root-level Nixpacks config for Railway monorepo builds.
+# Each Railway service overrides buildCommand/startCommand via the dashboard/API.
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm install -g pnpm@9 turbo", "pnpm install"]
+
+[start]
+cmd = "echo 'No default start command — each service overrides this'"
