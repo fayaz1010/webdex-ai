@@ -54,6 +54,9 @@ importers:
 
   packages/crawler:
     dependencies:
+      '@webdex/database':
+        specifier: workspace:*
+        version: link:../database
       '@webdex/shared':
         specifier: workspace:*
         version: link:../shared
