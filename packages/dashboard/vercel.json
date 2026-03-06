@@ -2,7 +2,7 @@
   "framework": "nextjs",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "buildCommand": "cd ../.. && ./node_modules/.bin/turbo build --filter=@webdex/dashboard",
-  "outputDirectory": "packages/dashboard/.next",
+  "outputDirectory": ".next",
   "rewrites": [
     {
       "source": "/api/:path*",
