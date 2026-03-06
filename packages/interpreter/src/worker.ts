@@ -109,8 +109,20 @@ async function processJob(job: Job<CrawlJobData>): Promise<void> {
   );
 }
 
+import http from 'http';
+
+function startHealthServer() {
+  const port = parseInt(process.env.PORT || '8080');
+  const server = http.createServer((_req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'ok', service: 'webdex-worker' }));
+  });
+  server.listen(port, () => console.log(`[worker] Health server on port ${port}`));
+}
+
 async function main() {
   console.log('[worker] WebDex Crawl Worker starting...');
+  await startHealthServer();
 
   if (!process.env.REDIS_URL && !process.env.REDIS_PRIVATE_URL) {
     console.warn('[worker] No REDIS_URL configured. Worker will idle until Redis is available.');
