@@ -4,7 +4,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && node --input-type=module -e \"import fs from 'fs';import path from 'path';fs.mkdirSync(path.join('dist','prompts'),{recursive:true});fs.readdirSync(path.join('src','prompts')).forEach(f=>fs.copyFileSync(path.join('src','prompts',f),path.join('dist','prompts',f)))\"",
+    "build": "tsc && node scripts/copy-prompts.js",
     "dev": "tsx watch src/index.ts",
     "interpret": "tsx src/cli.ts",
     "worker": "tsx src/worker.ts",
