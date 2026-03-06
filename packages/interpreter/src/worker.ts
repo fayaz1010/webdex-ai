@@ -112,17 +112,17 @@ async function processJob(job: Job<CrawlJobData>): Promise<void> {
 async function main() {
   console.log('[worker] WebDex Crawl Worker starting...');
 
-  let worker: ReturnType<typeof createCrawlWorker> | null = null;
-  try {
-    worker = createCrawlWorker(processJob);
-    worker.on('completed', job => console.log(`[worker] Job ${job.id} done`));
-    worker.on('failed', (job, err) => console.error(`[worker] Job ${job?.id} failed:`, err.message));
-    worker.on('error', err => console.error('[worker] Error:', err.message));
-  } catch (err) {
-    console.warn(`[worker] Could not connect to Redis: ${err}. Worker will idle until Redis is available.`);
+  if (!process.env.REDIS_URL && !process.env.REDIS_PRIVATE_URL) {
+    console.warn('[worker] No REDIS_URL configured. Worker will idle until Redis is available.');
+    console.warn('[worker] Add a Redis service in Railway and set REDIS_URL env var.');
     await new Promise(() => {});
     return;
   }
+
+  const worker = createCrawlWorker(processJob);
+  worker.on('completed', job => console.log(`[worker] Job ${job.id} done`));
+  worker.on('failed', (job, err) => console.error(`[worker] Job ${job?.id} failed:`, err.message));
+  worker.on('error', err => console.error('[worker] Error:', err.message));
 
   setInterval(async () => {
     try {
