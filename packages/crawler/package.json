@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@webdex/shared": "workspace:*",
+    "@webdex/database": "workspace:*",
     "playwright": "^1.42.0",
     "cheerio": "^1.0.0-rc.12",
     "bullmq": "^5.0.0",
