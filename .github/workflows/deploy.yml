@@ -74,7 +74,9 @@ jobs:
           vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # 4. Deploy API + Worker → Railway
+  # 4. Deploy API + Worker → Railway (via Railway's GitHub integration)
+  # Railway auto-deploys when commits are pushed to main.
+  # This step just logs confirmation.
   # ─────────────────────────────────────────────────────────────────────────────
   deploy-railway:
     name: Deploy API & Worker → Railway
@@ -82,14 +84,5 @@ jobs:
     needs: migrate
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-      - name: Deploy API service
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service webdex-api --detach
-      - name: Deploy Worker service
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service webdex-worker --detach
+      - name: Railway auto-deploy triggered
+        run: echo "Railway services will auto-deploy via GitHub integration on push to main."
