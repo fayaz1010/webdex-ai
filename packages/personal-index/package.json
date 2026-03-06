@@ -1,6 +1,7 @@
 {
   "name": "@webdex/personal-index",
   "version": "0.1.0",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": { "build": "tsc", "dev": "tsx watch src/index.ts" },
   "dependencies": {
