@@ -1,1 +1,1 @@
-{ "extends": "../../tsconfig.base.json", "compilerOptions": { "outDir": "dist", "rootDir": "src", "composite": true }, "include": ["src"], "references": [{ "path": "../shared" }] }
+{ "extends": "../../tsconfig.base.json", "compilerOptions": { "outDir": "dist", "rootDir": "src", "composite": true, "lib": ["ES2022", "dom"] }, "include": ["src"], "references": [{ "path": "../shared" }, { "path": "../database" }] }

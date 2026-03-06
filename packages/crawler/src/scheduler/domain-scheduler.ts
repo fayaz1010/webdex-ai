@@ -1,6 +1,7 @@
 import IORedis from 'ioredis';
+const Redis = (IORedis as any).default || IORedis;
 
-const redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379');
+const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
 const DEFAULT_DELAY_MS = parseInt(process.env.CRAWL_DEFAULT_DELAY_MS || '1000');
 

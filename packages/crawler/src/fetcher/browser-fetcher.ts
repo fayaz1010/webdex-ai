@@ -77,10 +77,16 @@ export async function browserFetch(url: string, opts: BrowserFetchOptions = {}):
   }
   const loadTimeMs = Date.now() - startTime;
 
-  // Get accessibility tree
-  const a11ySnapshot = await page.accessibility.snapshot();
-  const accessibilityTree = JSON.stringify(a11ySnapshot, null, 2);
-  const accessibilityTreeNodes = JSON.stringify(a11ySnapshot).split('"role"').length - 1;
+  // Get accessibility tree (may not exist in newer Playwright versions)
+  let accessibilityTree = '';
+  let accessibilityTreeNodes = 0;
+  try {
+    const a11ySnapshot = await (page as any).accessibility?.snapshot();
+    if (a11ySnapshot) {
+      accessibilityTree = JSON.stringify(a11ySnapshot, null, 2);
+      accessibilityTreeNodes = JSON.stringify(a11ySnapshot).split('"role"').length - 1;
+    }
+  } catch {}
 
   // Get page HTML after JS rendering
   const html = await page.content();
@@ -88,7 +94,7 @@ export async function browserFetch(url: string, opts: BrowserFetchOptions = {}):
   // Extract forms via page evaluation
   const forms: ExtractedForm[] = await page.evaluate(() => {
     const results: any[] = [];
-    document.querySelectorAll('form').forEach((form) => {
+    document.querySelectorAll('form').forEach((form: any) => {
       const fields: any[] = [];
       form.querySelectorAll('input, select, textarea').forEach((field: any) => {
         const name = field.getAttribute('name');
@@ -211,7 +217,7 @@ export async function browserFetch(url: string, opts: BrowserFetchOptions = {}):
   // Cleaned DOM (after JS rendering)
   const cleanedDom = await page.evaluate(() => {
     const clone = document.body.cloneNode(true) as HTMLElement;
-    clone.querySelectorAll('script, style, noscript').forEach(el => el.remove());
+    clone.querySelectorAll('script, style, noscript').forEach((el: any) => el.remove());
     return clone.innerHTML;
   });
 
@@ -289,7 +295,7 @@ export async function browserFetchStealth(url: string, opts: BrowserFetchOptions
   const html = await page.content();
   const cleanedDom = await page.evaluate(() => {
     const clone = document.body.cloneNode(true) as HTMLElement;
-    clone.querySelectorAll('script, style, noscript').forEach(el => el.remove());
+    clone.querySelectorAll('script, style, noscript').forEach((el: any) => el.remove());
     return clone.innerHTML;
   });
 

@@ -1,7 +1,8 @@
 import { Queue, Worker, type Job } from 'bullmq';
 import IORedis from 'ioredis';
+const Redis = (IORedis as any).default || IORedis;
 
-const connection = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379', { maxRetriesPerRequest: null });
+const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', { maxRetriesPerRequest: null });
 
 export const crawlQueue = new Queue('webdex:crawl', { connection });
 
