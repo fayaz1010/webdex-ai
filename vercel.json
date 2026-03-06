@@ -1,0 +1,6 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "pnpm install --frozen-lockfile && pnpm turbo build --filter=@webdex/dashboard",
+  "outputDirectory": "packages/dashboard/.next",
+  "installCommand": "pnpm install --frozen-lockfile"
+}

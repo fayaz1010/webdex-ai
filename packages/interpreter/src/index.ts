@@ -1,0 +1,14 @@
+export { initLocalModel, localInfer, disposeModel } from './models/local-model.js';
+export { initEmbeddingModel, generateEmbedding, generateBatchEmbeddings } from './models/embedding-model.js';
+export { escalateToCloud } from './models/escalation-model.js';
+export { cascadeInfer, getProviderStatus } from './models/free-api-cascade.js';
+export { classifyPage } from './pipeline/classify-page.js';
+export type { ClassificationResult } from './pipeline/classify-page.js';
+export { extractAllEntities } from './pipeline/extract-entities.js';
+export type { ExtractionInput } from './pipeline/extract-entities.js';
+export { calculateAieoScore } from './pipeline/score-page.js';
+export type { AieoScore } from './pipeline/score-page.js';
+export { detectFlows } from './pipeline/detect-flows.js';
+export type { DetectedFlow, FlowStep } from './pipeline/detect-flows.js';
+export { mapActions } from './pipeline/map-actions.js';
+export type { ActionMap } from './pipeline/map-actions.js';

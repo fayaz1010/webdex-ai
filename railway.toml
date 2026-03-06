@@ -1,0 +1,13 @@
+# Railway multi-service configuration
+# Each service in the Railway dashboard should point to this repo
+# with the appropriate service name set via RAILWAY_SERVICE env var
+
+[build]
+builder = "NIXPACKS"
+buildCommand = "pnpm install --frozen-lockfile && pnpm turbo build --filter=@webdex/api --filter=@webdex/interpreter --filter=@webdex/crawler --filter=@webdex/database --filter=@webdex/shared"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

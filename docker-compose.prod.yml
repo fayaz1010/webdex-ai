@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: packages/api/Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      API_PORT: "3000"
+    ports:
+      - "3000:3000"
+    restart: always
+
+  mcp-server:
+    build:
+      context: .
+      dockerfile: packages/mcp-server/Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+    restart: always
+
+  crawler:
+    build:
+      context: .
+      dockerfile: packages/crawler/Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      CRAWL_CONCURRENCY: "5"
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    restart: always
+
+  interpreter:
+    build:
+      context: .
+      dockerfile: packages/interpreter/Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      LOCAL_MODEL_PATH: /models/qwen2.5-3b-instruct-q4_k_m.gguf
+    volumes:
+      - ./packages/interpreter/models:/models
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    restart: always

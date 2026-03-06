@@ -1,0 +1,25 @@
+{
+  "name": "@webdex/interpreter",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "interpret": "tsx src/cli.ts",
+    "worker": "tsx src/worker.ts",
+    "evaluate": "tsx src/training/evaluate-accuracy.ts"
+  },
+  "dependencies": {
+    "@webdex/shared": "workspace:*",
+    "@webdex/database": "workspace:*",
+    "@webdex/crawler": "workspace:*",
+    "node-llama-cpp": "^3.0.0",
+    "@xenova/transformers": "^2.17.0",
+    "@anthropic-ai/sdk": "^0.24.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@webdex/database",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "migrate": "tsx src/migrate.ts"
+  },
+  "dependencies": {
+    "@webdex/shared": "workspace:*",
+    "pg": "^8.11.0",
+    "pgvector": "^0.1.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "@types/pg": "^8.11.0",
+    "@types/node": "^20.0.0"
+  }
+}

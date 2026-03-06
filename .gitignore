@@ -1,0 +1,48 @@
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.next/
+out/
+build/
+
+# Models (large binary files — download via scripts/download-models.sh)
+packages/interpreter/models/
+*.gguf
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turbo cache
+.turbo/
+
+# IDE
+.vscode/
+.idea/
+
+# Test coverage
+coverage/
+
+# Playwright browsers (downloaded at runtime)
+playwright-report/
+test-results/
+
+# Python
+__pycache__/
+*.pyc
+
+# Temporary
+*.tmp
+*.temp

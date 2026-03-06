@@ -1,0 +1,12 @@
+export { httpFetch } from './fetcher/http-fetcher.js';
+export { browserFetch, browserFetchStealth, closeBrowser } from './fetcher/browser-fetcher.js';
+export { smartFetch } from './fetcher/smart-router.js';
+export { detectCaptcha, attemptCloudflareBypass, solveCaptchaViaService } from './fetcher/captcha-detector.js';
+export type { CaptchaDetectionResult, CaptchaType } from './fetcher/captcha-detector.js';
+export { withRetry, backoffDelay, getRotatedUA, USER_AGENTS, sleep } from './fetcher/retry-strategy.js';
+export type { RetryOptions, RetryContext } from './fetcher/retry-strategy.js';
+export { getAllSeedUrls, solarPerthSeeds } from './seeds/solar-perth.js';
+export { addCrawlJob, addBulkCrawlJobs, createCrawlWorker, getQueueStats, crawlQueue } from './scheduler/crawl-queue.js';
+export type { CrawlJobData } from './scheduler/crawl-queue.js';
+export { extractDom } from './extractor/dom-extractor.js';
+export { extractMeta } from './extractor/meta-extractor.js';
