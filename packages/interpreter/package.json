@@ -4,7 +4,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node -e \"const fs=require('fs');const p=require('path');fs.mkdirSync(p.join('dist','prompts'),{recursive:true});fs.readdirSync(p.join('src','prompts')).forEach(f=>fs.copyFileSync(p.join('src','prompts',f),p.join('dist','prompts',f)))\"",
     "dev": "tsx watch src/index.ts",
     "interpret": "tsx src/cli.ts",
     "worker": "tsx src/worker.ts",
