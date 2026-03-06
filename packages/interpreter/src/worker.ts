@@ -110,15 +110,20 @@ async function processJob(job: Job<CrawlJobData>): Promise<void> {
 }
 
 async function main() {
-  console.log('🔄 WebDex Crawl Worker starting...');
+  console.log('[worker] WebDex Crawl Worker starting...');
 
-  const worker = createCrawlWorker(processJob);
+  let worker: ReturnType<typeof createCrawlWorker> | null = null;
+  try {
+    worker = createCrawlWorker(processJob);
+    worker.on('completed', job => console.log(`[worker] Job ${job.id} done`));
+    worker.on('failed', (job, err) => console.error(`[worker] Job ${job?.id} failed:`, err.message));
+    worker.on('error', err => console.error('[worker] Error:', err.message));
+  } catch (err) {
+    console.warn(`[worker] Could not connect to Redis: ${err}. Worker will idle until Redis is available.`);
+    await new Promise(() => {});
+    return;
+  }
 
-  worker.on('completed', job => console.log(`[worker] Job ${job.id} done`));
-  worker.on('failed', (job, err) => console.error(`[worker] Job ${job?.id} failed:`, err.message));
-  worker.on('error', err => console.error('[worker] Error:', err.message));
-
-  // Log queue depth every 30s
   setInterval(async () => {
     try {
       const s = await getQueueStats();
@@ -128,7 +133,7 @@ async function main() {
 
   const shutdown = async () => {
     console.log('[worker] Shutting down...');
-    await worker.close();
+    if (worker) await worker.close();
     await closeBrowser();
     await disposeModel();
     process.exit(0);
@@ -136,7 +141,7 @@ async function main() {
   process.on('SIGTERM', shutdown);
   process.on('SIGINT', shutdown);
 
-  console.log('✅ Worker ready — listening for crawl jobs');
+  console.log('[worker] Ready - listening for crawl jobs');
 }
 
-main().catch(err => { console.error('Worker crashed:', err); process.exit(1); });
+main().catch(err => { console.error('[worker] Fatal:', err); process.exit(1); });

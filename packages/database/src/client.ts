@@ -2,6 +2,7 @@ import { Pool } from 'pg';
 import pgvector from 'pgvector/pg';
 
 let pool: Pool | null = null;
+let pgvectorRegistered = false;
 
 export function getPool(): Pool {
   if (!pool) {
@@ -11,7 +12,17 @@ export function getPool(): Pool {
     });
 
     pool.on('connect', async (client) => {
-      await pgvector.registerType(client);
+      if (pgvectorRegistered) {
+        try { await pgvector.registerType(client); } catch { /* vector ext not yet installed */ }
+        return;
+      }
+      try {
+        await client.query('CREATE EXTENSION IF NOT EXISTS vector');
+        await pgvector.registerType(client);
+        pgvectorRegistered = true;
+      } catch {
+        console.warn('[db] pgvector extension not available — vector operations will fail');
+      }
     });
   }
   return pool;
