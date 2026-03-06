@@ -2,6 +2,8 @@
 
 **The Semantic Action Index for the AI Web**
 
+<!-- Deployment trigger: 2026-03-06 -->
+
 Google finds pages. Perplexity writes answers. WebDex gets things done.
 
 ## Quick Start
